@@ -12,7 +12,7 @@ Application.start(:nerves_bootstrap)
 # https://hexdocs.pm/nerves/advanced-configuration.html for details.
 
 # zenohd is only bundled for targets that have a "rootfs_overlay-<target>"
-# directory with a matching binary (see lib/zenoh_rpi4/application.ex).
+# directory with a matching binary (see lib/nerves_zenohd/application.ex).
 # Targets without one just get the common overlay, and skip starting zenohd.
 config :nerves,
   :firmware,

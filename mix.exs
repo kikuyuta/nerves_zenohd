@@ -1,7 +1,7 @@
-defmodule ZenohRpi4.MixProject do
+defmodule NervesZenohd.MixProject do
   use Mix.Project
 
-  @app :zenoh_rpi4
+  @app :nerves_zenohd
   @version "0.1.0"
   @all_targets [
     :bbb,
@@ -36,7 +36,7 @@ defmodule ZenohRpi4.MixProject do
   def application do
     [
       extra_applications: [:logger, :runtime_tools],
-      mod: {ZenohRpi4.Application, []}
+      mod: {NervesZenohd.Application, []}
     ]
   end
 

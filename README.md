@@ -1,4 +1,4 @@
-# ZenohRpi4
+# NervesZenohd
 
 A Nerves app that runs [zenohd](https://github.com/eclipse-zenoh/zenoh) as a
 supervised OTP child so it starts automatically on boot — same mechanism on
@@ -7,7 +7,7 @@ architecture/libc triple.
 
 ## How auto-start works (common to every target)
 
-- `lib/zenoh_rpi4/application.ex` starts `zenohd` via `MuonTrap.Daemon` as an
+- `lib/nerves_zenohd/application.ex` starts `zenohd` via `MuonTrap.Daemon` as an
   OTP-supervised child (`/usr/bin/zenohd --config /etc/zenoh/config.json5`).
   If `/usr/bin/zenohd` isn't present on the target, it logs a warning and
   skips starting it instead of crash-looping — so a board without a matching

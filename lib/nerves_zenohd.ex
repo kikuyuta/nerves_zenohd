@@ -1,6 +1,6 @@
-defmodule ZenohRpi4 do
+defmodule NervesZenohd do
   @moduledoc """
-  Documentation for `ZenohRpi4`.
+  Documentation for `NervesZenohd`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule ZenohRpi4 do
 
   ## Examples
 
-      iex> ZenohRpi4.hello()
+      iex> NervesZenohd.hello()
       :world
 
   """
