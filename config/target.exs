@@ -56,7 +56,16 @@ config :vintage_net,
     {"eth0",
      %{
        type: VintageNetEthernet,
-       ipv4: %{method: :dhcp}
+       # Static IP so the device is reachable at a fixed address for `mix
+       # upload`/testing (matches the same physical board's old phototaxis
+       # config). Update/remove this if the app moves to different hardware.
+       ipv4: %{
+         method: :static,
+         address: "192.168.10.8",
+         prefix_length: 24,
+         gateway: "192.168.10.1",
+         name_servers: ["192.168.10.1"]
+       }
      }},
     {"wlan0", %{type: VintageNetWiFi}}
   ]

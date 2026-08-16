@@ -1,12 +1,10 @@
 {
   mode: "peer",
   listen: {
-    endpoints: ["tcp/0.0.0.0:7447", "udp/224.0.0.225:7447"]
+    endpoints: ["tcp/0.0.0.0:7447"]
   },
-
-  transport: {
-    discovery: {
-      enabled: true
-    }
-  },
+  // Multicast scouting (peer auto-discovery) is enabled by default at
+  // 224.0.0.224:7446 — see zenoh/DEFAULT_CONFIG.json5 `scouting.multicast`.
+  // `transport.discovery` (used previously) isn't a real zenoh v1.7.1 field
+  // and made zenohd panic on startup; verified live on a BBB device.
 }
