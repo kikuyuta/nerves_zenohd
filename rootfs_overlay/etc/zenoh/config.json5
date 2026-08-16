@@ -1,0 +1,12 @@
+{
+  mode: "peer",
+  listen: {
+    endpoints: ["tcp/0.0.0.0:7447", "udp/224.0.0.225:7447"]
+  },
+
+  transport: {
+    discovery: {
+      enabled: true
+    }
+  },
+}
