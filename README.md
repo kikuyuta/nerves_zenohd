@@ -20,19 +20,26 @@ architecture/libc triple.
   That source checkout isn't tracked here (see `.gitignore`) — re-clone it at
   that commit to rebuild any of the binaries below.
 
-Bundled so far: `rpi4`, `rpi5`, `rpi0_2`, `qemu_aarch64` (aarch64), `bbb` (armv7).
-Not yet built: `rpi2`, `rpi3`, `grisp2`, `osd32mp1` (armv7 — same triple as bbb,
-just needs the binary copied into a new overlay dir), `rpi`/`rpi0` (armv6),
-`mangopi_mq_pro` (riscv64), `x86_64` (musl).
+Bundled so far: `rpi4` (aarch64, built but not yet tested on real hardware),
+`bbb` (armv7, cross-built and verified on real hardware — see below).
 
-## RPi4 / RPi5 / RPi Zero 2 W / QEMU aarch64 (`aarch64-nerves-linux-gnu`)
+Not built: `rpi5`, `rpi0_2`, `qemu_aarch64` (same `aarch64-nerves-linux-gnu`
+triple as rpi4 — reusing rpi4's binary would work, but there was no actual
+need for those targets, so no overlay dir was created for them). Also not
+built: `rpi2`, `rpi3`, `grisp2`, `osd32mp1` (armv7 — same triple as bbb),
+`rpi`/`rpi0` (armv6), `mangopi_mq_pro` (riscv64), `x86_64` (musl).
 
-These targets share one toolchain triple, confirmed from each target's
-`nerves_defconfig` (`BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX`). The `zenohd_gnu`
-binary originally built alongside this project matched that triple exactly
-(glibc, aarch64), so no cross-build was needed here — it was simply copied
-into `rootfs_overlay-rpi4/`, `rootfs_overlay-rpi5/`, `rootfs_overlay-rpi0_2/`,
-and `rootfs_overlay-qemu_aarch64/`, each as `usr/bin/zenohd`.
+Note: unlike `nerves_toolchain_*`/`nerves_system_*`, `mix deps.get`/`mix firmware`
+never fetch `zenohd` for you — it has nothing to do with Nerves' own toolchain
+or system packages. Every `rootfs_overlay-<target>/usr/bin/zenohd` here was
+placed there manually (copied or cross-built), and a new target needs the
+same treatment before it'll actually run zenohd.
+
+## RPi4 (`aarch64-nerves-linux-gnu`)
+
+The `zenohd_gnu` binary originally built alongside this project matched
+`rpi4`'s toolchain triple exactly (glibc, aarch64), so no cross-build was
+needed here — it was simply copied into `rootfs_overlay-rpi4/usr/bin/zenohd`.
 
 ```sh
 MIX_TARGET=rpi4 mix deps.get   # downloads nerves_toolchain_aarch64_nerves_linux_gnu + nerves_system_rpi4
