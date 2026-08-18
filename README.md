@@ -20,14 +20,14 @@ architecture/libc triple.
   That source checkout isn't tracked here (see `.gitignore`) — re-clone it at
   that commit to rebuild any of the binaries below.
 
-Bundled so far: `rpi4` (aarch64, built but not yet tested on real hardware),
-`bbb` (armv7, cross-built and verified on real hardware — see below).
+Bundled so far: `bbb` (armv7, cross-built and verified on real hardware —
+see below), `rpi2` (armv7, same toolchain triple as bbb — see below).
 
-Not built: `rpi5`, `rpi0_2`, `qemu_aarch64` (same `aarch64-nerves-linux-gnu`
-triple as rpi4 — reusing rpi4's binary would work, but there was no actual
-need for those targets, so no overlay dir was created for them). Also not
-built: `rpi2`, `rpi3`, `grisp2`, `osd32mp1` (armv7 — same triple as bbb),
-`rpi`/`rpi0` (armv6), `mangopi_mq_pro` (riscv64), `x86_64` (musl).
+Not built: `rpi3`, `grisp2`, `osd32mp1` (armv7 — same triple as bbb/rpi2,
+reusing that binary would work, but there was no actual need for those
+targets, so no overlay dir was created for them). Also not built: `rpi4`,
+`rpi5`, `rpi0_2`, `qemu_aarch64` (aarch64), `rpi`/`rpi0` (armv6),
+`mangopi_mq_pro` (riscv64), `x86_64` (musl).
 
 Note: unlike `nerves_toolchain_*`/`nerves_system_*`, `mix deps.get`/`mix firmware`
 never fetch `zenohd` for you — it has nothing to do with Nerves' own toolchain
@@ -35,16 +35,17 @@ or system packages. Every `rootfs_overlay-<target>/usr/bin/zenohd` here was
 placed there manually (copied or cross-built), and a new target needs the
 same treatment before it'll actually run zenohd.
 
-## RPi4 (`aarch64-nerves-linux-gnu`)
+## RPi2B (`armv7-nerves-linux-gnueabihf`)
 
-The `zenohd_gnu` binary originally built alongside this project matched
-`rpi4`'s toolchain triple exactly (glibc, aarch64), so no cross-build was
-needed here — it was simply copied into `rootfs_overlay-rpi4/usr/bin/zenohd`.
+`nerves_system_rpi2` uses the exact same toolchain triple as `nerves_system_bbb`
+(`nerves_toolchain_armv7_nerves_linux_gnueabihf`), so no separate cross-build
+was needed — the `bbb` binary was simply copied into
+`rootfs_overlay-rpi2/usr/bin/zenohd` as-is.
 
 ```sh
-MIX_TARGET=rpi4 mix deps.get   # downloads nerves_toolchain_aarch64_nerves_linux_gnu + nerves_system_rpi4
-MIX_TARGET=rpi4 mix firmware   # bundles rootfs_overlay/ + rootfs_overlay-rpi4/
-MIX_TARGET=rpi4 mix burn       # or mix upload for an existing device
+MIX_TARGET=rpi2 mix deps.get   # downloads nerves_toolchain_armv7_nerves_linux_gnueabihf + nerves_system_rpi2
+MIX_TARGET=rpi2 mix firmware   # bundles rootfs_overlay/ + rootfs_overlay-rpi2/
+MIX_TARGET=rpi2 mix burn       # or mix upload for an existing device
 ```
 
 ## BeagleBone Black (`armv7-nerves-linux-gnueabihf`)
