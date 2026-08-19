@@ -61,6 +61,7 @@ config :vintage_net,
        # config). Update/remove this if the app moves to different hardware.
        ipv4: %{
          method: :static,
+#         address: "192.168.10.9",
          address: "192.168.10.10",
          prefix_length: 24,
          gateway: "192.168.10.1",
